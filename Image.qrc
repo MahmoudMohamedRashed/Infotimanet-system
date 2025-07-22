@@ -1,0 +1,29 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Image/car-door.png</file>
+        <file>Image/car-door (1).png</file>
+        <file>Image/headlight (2).png</file>
+        <file>Image/seat-belt.png</file>
+        <file>Image/seat-belt (1).png</file>
+        <file>Image/headlight.png</file>
+        <file>Image/left-arrow.png</file>
+        <file>Image/left-arrow (1).png</file>
+        <file>Image/right-arrow (2).png</file>
+        <file>Image/right-arrow (3).png</file>
+        <file>Image/hazard (2).png</file>
+        <file>Image/hazard .png</file>
+        <file>Image/warning.png</file>
+        <file>Image/warning (1).png</file>
+        <file>Image/distance.png</file>
+        <file>Image/gas-pump.png</file>
+        <file>Image/mileage.png</file>
+        <file>Image/cooler.png</file>
+        <file>Image/plane-seats (1).png</file>
+        <file>Image/air-flow.png</file>
+        <file>Image/air-flow (1).png</file>
+        <file>Image/blowing.png</file>
+        <file>Image/blowing (1).png</file>
+        <file>Image/windscreen-air.png</file>
+        <file>Image/windscreen-air (2).png</file>
+    </qresource>
+</RCC>

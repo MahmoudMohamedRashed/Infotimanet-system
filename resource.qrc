@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>SpeedGauge.qml</file>
+        <file>RpmGauge.qml</file>
+        <file>FuelGauge.qml</file>
+        <file>Image/car-door.png</file>
+        <file>Image/car-door (1).png</file>
+        <file>Image/headlight (2).png</file>
+        <file>Image/seat-belt.png</file>
+        <file>Image/seat-belt (1).png</file>
+    </qresource>
+</RCC>
