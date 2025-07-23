@@ -1,7 +1,10 @@
 Checks: >
   clang-analyzer-*,
   modernize-*,
-  readability-*
+  readability-*,
+  performance-*,
+  bugprone-*
+
 WarningsAsErrors: ''
 HeaderFilterRegex: '.*'
 AnalyzeTemporaryDtors: true
