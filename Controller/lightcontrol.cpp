@@ -1,7 +1,7 @@
 #include "lightcontrol.h"
 
-lightControl::lightControl() {}
+lightControl::lightControl() = default;
 
-lightState lightControl ::lightToggle(){
+auto lightControl ::lightToggle() -> lightState{
     return lightModel::lightToggle() ;
 }

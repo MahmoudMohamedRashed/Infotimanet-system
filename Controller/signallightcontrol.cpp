@@ -1,15 +1,15 @@
 #include "signallightcontrol.h"
 
-signalLightControl::signalLightControl() {}
+signalLightControl::signalLightControl() = default;
 
-signalState signalLightControl::leftArrowClicked(){
+auto signalLightControl::leftArrowClicked() -> signalState{
     return signalModel::leftArrowClicked() ;
 }
 
-signalState signalLightControl::rightArrowClicked(){
+auto signalLightControl::rightArrowClicked() -> signalState{
     return signalModel::rightArrowClicked() ;
 }
 
-signalState signalLightControl::hazardClicked(){
+auto signalLightControl::hazardClicked() -> signalState{
     return signalModel::hazardClicked() ;
 }

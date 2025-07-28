@@ -6,7 +6,7 @@ void cabinTempModel::setCabinTemp(const int temp){
     cabinTemp = temp ;
 }
 
-int cabinTempModel::getCabinTemp(){
+auto cabinTempModel::getCabinTemp() ->int {
     return cabinTemp ;
 }
 
@@ -17,7 +17,7 @@ void doorLockModel::setDoorFlag(const doorState flag){
     doorFlag = flag ;
 }
 
-doorState doorLockModel::getDoorFlag(){
+auto doorLockModel::getDoorFlag() -> doorState{
     return doorFlag ;
 }
 
@@ -29,7 +29,7 @@ void fanModel::setFanSpeed(const int speed){
     fanSpeed = speed ;
 }
 
-int fanModel::getFanSpeed(){
+auto fanModel::getFanSpeed() ->int {
     return fanSpeed ;
 }
 
@@ -37,7 +37,7 @@ void fanModel::setFanDirection(const fanDirState state){
     fanState = state ;
 }
 
-fanDirState fanModel::getFanDirection(){
+auto fanModel::getFanDirection() -> fanDirState{
     return fanState ;
 }
 
@@ -58,22 +58,22 @@ void gaugeModel::setFuelGauge(const float fuel){
     fuelGauge = fuel ;
 }
 
-int gaugeModel::getSpeedGauge(){
+auto gaugeModel::getSpeedGauge() -> int{
     return speedGauge ;
 }
 
-float gaugeModel::getRPMGauge(){
+auto gaugeModel::getRPMGauge() -> float{
     return RPMGauge ;
 }
 
-float gaugeModel::getFuelGauge(){
+auto gaugeModel::getFuelGauge() -> float{
     return fuelGauge ;
 }
 
 
 lightState lightFlag {lightState::LIGHTOFF} ;
 
-lightState lightModel::lightToggle(){
+auto lightModel::lightToggle() -> lightState {
     lightFlag = lightFlag == lightState::LIGHTOFF ? lightState::LIGHTON : lightState::LIGHTOFF ;
     return lightFlag;
 }
@@ -85,7 +85,7 @@ void motorTempModel::setMotorTemp(const int temp){
     motorTemp = temp;
 }
 
-int motorTempModel::getMotorTemp(){
+auto motorTempModel::getMotorTemp() -> int{
     return motorTemp;
 }
 
@@ -96,7 +96,7 @@ void beltModel::setBeltState(const beltState state){
     beltFlag = state;
 }
 
-beltState beltModel::getBeltState(){
+auto beltModel::getBeltState() -> beltState{
     return beltFlag;
 }
 
@@ -105,21 +105,21 @@ signalState leftFlag {signalState::LEFTOFF};
 signalState rightFlag {signalState::RIGHTOFF};
 signalState hazardFlag{signalState::HAZARDOFF};
 
-signalState signalModel::leftArrowClicked(){
+auto signalModel::leftArrowClicked() -> signalState{
     hazardFlag = signalState::HAZARDOFF ;
     rightFlag = signalState::RIGHTOFF ;
     leftFlag = leftFlag == signalState::LEFTOFF ? signalState::LEFTON : signalState::LEFTOFF;
     return leftFlag;
 }
 
-signalState signalModel::rightArrowClicked(){
+auto signalModel::rightArrowClicked() -> signalState{
     hazardFlag = signalState::HAZARDOFF ;
     leftFlag = signalState::LEFTOFF ;
     rightFlag = rightFlag == signalState::RIGHTOFF ? signalState::RIGHTON : signalState::RIGHTOFF;
     return rightFlag;
 }
 
-signalState signalModel::hazardClicked(){
+auto signalModel::hazardClicked() -> signalState{
     leftFlag = signalState::LEFTOFF ;
     rightFlag = signalState::RIGHTOFF ;
     hazardFlag = hazardFlag == signalState::HAZARDOFF ? signalState::HAZARDON : signalState::HAZARDOFF;
@@ -133,7 +133,7 @@ int maxSpeed {} ;
 int fuelCons {} ;
 int distance {} ;
 
-tripState tripInfoModel::startEndTrip(){
+auto tripInfoModel::startEndTrip() -> tripState{
     if(tripFlag == tripState::STARTTRIP){
         tripFlag = tripState::ENDTRIP ;
         /***************************************/
@@ -148,19 +148,19 @@ tripState tripInfoModel::startEndTrip(){
     return tripFlag ;
 }
 
-int tripInfoModel::getAvgSpeed(){
+auto tripInfoModel::getAvgSpeed() -> int{
     return avgSpeed ;
 }
 
-int tripInfoModel::getMaxSpeed(){
+auto tripInfoModel::getMaxSpeed() -> int{
     return maxSpeed ;
 }
 
-int tripInfoModel::getDistance(){
+auto tripInfoModel::getDistance() -> int{
     return distance ;
 }
 
-int tripInfoModel::getFuelCons(){
+auto tripInfoModel::getFuelCons() -> int{
     return fuelCons ;
 }
 

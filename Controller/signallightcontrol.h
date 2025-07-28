@@ -8,9 +8,9 @@ class signalLightControl
 public:
     signalLightControl();
 
-    static signalState leftArrowClicked() ;
-    static signalState rightArrowClicked();
-    static signalState hazardClicked() ;
+    static auto leftArrowClicked() -> signalState;
+    static auto rightArrowClicked() -> signalState;
+    static auto hazardClicked() -> signalState;
 };
 
 #endif // SIGNALLIGHTCONTROL_H

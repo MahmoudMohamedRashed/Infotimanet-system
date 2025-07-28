@@ -1,3 +1,3 @@
 #include "warningcontrol.h"
 
-warningControl::warningControl() {}
+warningControl::warningControl() = default;

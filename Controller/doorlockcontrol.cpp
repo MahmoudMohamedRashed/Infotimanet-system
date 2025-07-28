@@ -8,6 +8,6 @@ void doorLockControl::unLock(){
     doorLockModel::setDoorFlag(doorState::DOORUNLOCKED) ;
 }
 
-doorState doorLockControl::isLock(){
+auto doorLockControl::isLock()->doorState{
     return doorLockModel::getDoorFlag() ;
 }

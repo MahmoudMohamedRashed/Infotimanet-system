@@ -8,7 +8,7 @@ class lightControl
 public:
     lightControl();
 
-    static lightState lightToggle() ;
+    static auto lightToggle() -> lightState;
 
 };
 

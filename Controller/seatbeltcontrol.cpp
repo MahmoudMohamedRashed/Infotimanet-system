@@ -1,6 +1,6 @@
 #include "seatbeltcontrol.h"
 
-seatBeltControl::seatBeltControl() {}
+seatBeltControl::seatBeltControl() = default;
 
 
 void seatBeltControl::lock(){
@@ -11,6 +11,6 @@ void seatBeltControl::unLock(){
     beltModel::setBeltState(beltState::BELTUNLOCKED) ;
 }
 
-beltState seatBeltControl::isLock(){
+auto seatBeltControl::isLock() -> beltState{
     return beltModel::getBeltState() ;
 }

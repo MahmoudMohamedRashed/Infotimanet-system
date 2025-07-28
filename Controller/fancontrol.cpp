@@ -1,12 +1,12 @@
 #include "fancontrol.h"
 
-fanControl::fanControl() {}
+fanControl::fanControl() = default;
 
 void fanControl::setFanSpeed(const int speed){
     fanModel::setFanSpeed(speed) ;
 }
 
-int fanControl::getFanSpeed(){
+auto fanControl::getFanSpeed() -> int{
     return fanModel::getFanSpeed() ;
 }
 
@@ -14,6 +14,6 @@ void fanControl::setFanDirection(const fanDirState state){
     fanModel::setFanDirection(state) ;
 }
 
-fanDirState fanControl::getFanDirection(){
+auto fanControl::getFanDirection() -> fanDirState{
     return fanModel::getFanDirection() ;
 }
