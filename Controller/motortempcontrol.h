@@ -6,8 +6,8 @@ class motorTempControl
 public:
     motorTempControl();
 
-    static void setMotorTemp(const int temp) ;
-    static int getMotorTemp() ;
+    static void setMotorTemp(int temp) ;
+    static auto getMotorTemp() -> int;
 
 };
 

@@ -10,7 +10,7 @@ public:
 
     static void lock() ;
     static void unLock() ;
-    static beltState isLock() ;
+    static auto isLock() -> beltState;
 };
 
 #endif // SEATBELTCONTROL_H

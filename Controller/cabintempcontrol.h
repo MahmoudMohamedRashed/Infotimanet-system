@@ -6,8 +6,8 @@ class cabinTempControl
 public:
     cabinTempControl();
 
-    static int getCabinTempControl() ;
-    static void setCabinTempControl(const int temp) ;
+    static auto getCabinTempControl() -> int;
+    static void setCabinTempControl(int temp) ;
 };
 
 #endif // CABINTEMPCONTROL_H

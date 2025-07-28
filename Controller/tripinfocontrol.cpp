@@ -1,3 +1,3 @@
 #include "tripinfocontrol.h"
 
-tripInfoControl::tripInfoControl() {}
+tripInfoControl::tripInfoControl() = default;

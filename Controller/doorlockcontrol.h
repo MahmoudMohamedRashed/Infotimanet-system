@@ -10,7 +10,7 @@ public:
 
     static void lock() ;
     static void unLock() ;
-    static doorState isLock() ;
+    static auto isLock()-> doorState;
 };
 
 #endif // DOORLOCKCONTROL_H
