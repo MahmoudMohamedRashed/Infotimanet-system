@@ -8,10 +8,10 @@ class fanControl
 public:
     fanControl();
 
-    static int getFanSpeed() ;
-    static void setFanSpeed(const int speed) ;
-    static fanDirState getFanDirection() ;
-    static void setFanDirection(const fanDirState state) ;
+    static auto getFanSpeed() -> int;
+    static void setFanSpeed(int speed) ;
+    static auto getFanDirection() -> fanDirState;
+    static void setFanDirection(fanDirState state) ;
 };
 
 #endif // FANCONTROL_H

@@ -8,13 +8,13 @@ class tripInfoControl
 public:
     tripInfoControl();
 
-    static tripState startEndTrip() ;
+    static auto startEndTrip() -> tripState;
     static void updateData() ;
 
-    static int getFuelCons() ;
-    static int getAvgSpeed() ;
-    static int getMaxSpeed() ;
-    static int getDistance() ;
+    static auto getFuelCons() -> int;
+    static auto getAvgSpeed() -> int;
+    static auto getMaxSpeed() -> int;
+    static auto getDistance() -> int;
 
 };
 

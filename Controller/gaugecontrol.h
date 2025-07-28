@@ -6,14 +6,14 @@ class gaugeControl
 public:
     gaugeControl();
 
-    static void setSpeedGauge(const int speed) ;
-    static int getSpeedGauge() ;
+    static void setSpeedGauge(int speed) ;
+    static auto getSpeedGauge() -> int;
 
-    static void setRPMGauge(const float rpm) ;
-    static float getRPMGauge() ;
+    static void setRPMGauge(float rpm) ;
+    static auto getRPMGauge() -> float;
 
-    static void setFuelGauge(const float fuel) ;
-    static float getFuelGauge() ;
+    static void setFuelGauge(float fuel) ;
+    static auto getFuelGauge() -> float;
 };
 
 #endif // GAUGECONTROL_H
