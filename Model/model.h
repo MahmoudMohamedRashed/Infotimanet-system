@@ -29,16 +29,16 @@ enum class tripState : char{
 extern int cabinTemp ;
 
 namespace cabinTempModel {
-void setCabinTemp(const int temp) ;
-int getCabinTemp() ;
+void setCabinTemp(int temp) ;
+auto getCabinTemp() ->int ;
 }
 
 
 extern doorState doorFlag ;
 
 namespace doorLockModel {
-void setDoorFlag(const doorState flag) ;
-doorState getDoorFlag() ;
+void setDoorFlag(doorState flag) ;
+auto getDoorFlag() -> doorState ;
 }
 
 extern int fanSpeed ;
@@ -46,10 +46,10 @@ extern fanDirState fanState ;
 
 
 namespace fanModel {
-int getFanSpeed() ;
-void setFanSpeed(const int speed) ;
-fanDirState getFanDirection() ;
-void setFanDirection(const fanDirState state) ;
+auto getFanSpeed() -> int ;
+void setFanSpeed(int speed) ;
+auto getFanDirection() -> fanDirState ;
+void setFanDirection(fanDirState state) ;
 }
 
 extern int speedGauge ;
@@ -57,35 +57,35 @@ extern float RPMGauge ;
 extern float fuelGauge ;
 
 namespace gaugeModel {
-void setSpeedGauge(const int speed) ;
-int getSpeedGauge() ;
+void setSpeedGauge(int speed) ;
+auto getSpeedGauge() -> int ;
 
-void setRPMGauge(const float rpm) ;
-float getRPMGauge() ;
+void setRPMGauge(float rpm) ;
+auto getRPMGauge() -> float ;
 
-void setFuelGauge(const float fuel) ;
-float getFuelGauge() ;
+void setFuelGauge(float fuel) ;
+auto getFuelGauge() -> float;
 }
 
 
 extern lightState lightFlag ;
 
 namespace lightModel{
-lightState lightToggle() ;
+auto lightToggle() -> lightState ;
 }
 
 extern int motorTemp ;
 
 namespace motorTempModel{
-void setMotorTemp(const int temp) ;
-int getMotorTemp() ;
+void setMotorTemp(int temp) ;
+auto getMotorTemp() -> int ;
 }
 
 extern beltState beltFlag ;
 
 namespace beltModel{
-void setBeltState(const beltState state);
-beltState getBeltState();
+void setBeltState(beltState state);
+auto getBeltState() -> beltState;
 }
 
 extern signalState leftFlag ;
@@ -93,9 +93,9 @@ extern signalState rightFlag ;
 extern signalState hazardFlag ;
 
 namespace signalModel{
-signalState leftArrowClicked() ;
-signalState rightArrowClicked();
-signalState hazardClicked() ;
+auto leftArrowClicked() -> signalState;
+auto rightArrowClicked() -> signalState;
+auto hazardClicked() -> signalState;
 }
 
 
@@ -106,14 +106,14 @@ extern int fuelCons ;
 extern int distance ;
 
 namespace tripInfoModel {
-tripState startEndTrip() ;
+auto startEndTrip() -> tripState;
 
 void updateData() ;
 
-int getFuelCons() ;
-int getAvgSpeed() ;
-int getMaxSpeed() ;
-int getDistance() ;
+auto getFuelCons() -> int ;
+auto getAvgSpeed() -> int ;
+auto getMaxSpeed() -> int ;
+auto getDistance() -> int ;
 }
 
 
