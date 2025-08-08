@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package weather;
+
+message TemperatureResponse {
+  float temperature = 1;
+}
