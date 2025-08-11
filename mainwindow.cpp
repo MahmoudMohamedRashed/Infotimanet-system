@@ -11,6 +11,7 @@
 #include "Controller/seatbeltcontrol.h"
 #include "Controller/tripinfocontrol.h"
 #include "Controller/warningcontrol.h"
+#include "protobuf/tempupdate.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -57,6 +58,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_moveRightBtn_clicked()
 {
     m_curPos = (m_curPos + 1) % maxTab ;
+    if(m_curPos == 2) updateWeather() ;
     ui->tabWidget->setCurrentIndex(m_curPos) ;
 }
 
@@ -88,6 +90,7 @@ void MainWindow::on_moveLeftBtn_clicked()
 {
     if(m_curPos == 0) m_curPos = maxTab - 1 ;
     else m_curPos -= 1 ;
+    if(m_curPos == 2) updateWeather() ;
     ui->tabWidget->setCurrentIndex(m_curPos) ;
 }
 
@@ -210,3 +213,8 @@ void MainWindow::on_faceFeetBtn_clicked()
     ui->feetBtn->setIcon(QIcon(":/Image/windscreen-air.png")) ;
 }
 
+
+void MainWindow::updateWeather(){
+  requestTemperatureOnce() ;
+  ui->weather_Lcd->display(temp) ;
+}

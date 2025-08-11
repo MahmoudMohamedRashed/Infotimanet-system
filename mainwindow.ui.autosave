@@ -1024,7 +1024,7 @@ QSlider::add-page:horizontal {
        <widget class="QLCDNumber" name="weather_Lcd">
         <property name="geometry">
          <rect>
-          <x>400</x>
+          <x>350</x>
           <y>695</y>
           <width>250</width>
           <height>70</height>

@@ -8,15 +8,14 @@ const std::string SERVER_ADDRESS = "tcp://localhost:1883";
 const std::string CLIENT_ID = "temp_cpp_client";
 const std::string REQ_TOPIC = "temp/request";
 const std::string RES_TOPIC = "temp/response";
+int temp = 30 ;
 
 class callback : public virtual mqtt::callback {
 public:
     void message_arrived(mqtt::const_message_ptr msg) override {
         weather::TemperatureResponse response;
         if (response.ParseFromString(msg->get_payload())) {
-            std::cout << "Temperature: " << response.temperature() << "°C\n";
-        } else {
-            std::cerr << "Failed to parse protobuf response\n";
+            temp = response.temperature();
         }
     }
 };
@@ -36,12 +35,8 @@ void requestTemperatureOnce() {
     mqtt::message_ptr pubmsg = mqtt::make_message(REQ_TOPIC, "");
     pubmsg->set_qos(1);
     client.publish(pubmsg)->wait();
-
+    std::this_thread::sleep_for(std::chrono::seconds(1));
     client.disconnect()->wait();
     google::protobuf::ShutdownProtobufLibrary();
 }
 
-int main() {
-    while(1)requestTemperatureOnce();  
-    return 0;
-}

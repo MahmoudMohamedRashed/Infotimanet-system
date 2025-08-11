@@ -52,6 +52,10 @@ private slots:
     void on_faceFeetBtn_clicked();
 
 private:
+
+
+ void updateWeather() ;
+
     Ui::MainWindow *ui;
     int m_curPos{} ;
 };
