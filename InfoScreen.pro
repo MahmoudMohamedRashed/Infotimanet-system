@@ -13,11 +13,12 @@ CONFIG -= app_bundle
 
 
 # Protobuf paths for WSL
+INCLUDEPATH += /usr/local/include
 INCLUDEPATH += /usr/include
-LIBS += -L/usr/lib/x86_64-linux-gnu -lprotobuf
 
-INCLUDEPATH += /usr/include
+LIBS += -L/usr/local/lib -Wl,-rpath,/usr/local/lib -lprotobuf
 LIBS += -L/usr/lib/x86_64-linux-gnu -lpaho-mqttpp3 -lpaho-mqtt3as
+
 
 SOURCES += \
     Controller/cabintempcontrol.cpp \
