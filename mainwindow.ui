@@ -1040,7 +1040,7 @@ QSlider::add-page:horizontal {
        <widget class="QLabel" name="label_4">
         <property name="geometry">
          <rect>
-          <x>600</x>
+          <x>580</x>
           <y>710</y>
           <width>100</width>
           <height>70</height>
