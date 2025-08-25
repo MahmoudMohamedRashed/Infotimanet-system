@@ -8,6 +8,10 @@
 #include <QVBoxLayout>
 #include <QQuickItem>
 #include <QTabBar>
+#include <QKeyEvent>
+#include <QTimer>
 
+
+#define interTime   1'000
 
 #endif // INCLUDEFILS_H

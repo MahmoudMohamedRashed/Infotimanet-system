@@ -29,6 +29,7 @@ SOURCES += \
     Controller/motortempcontrol.cpp \
     Controller/seatbeltcontrol.cpp \
     Controller/signallightcontrol.cpp \
+    Controller/speedholdercontroller.cpp \
     Controller/tripinfocontrol.cpp \
     Controller/warningcontrol.cpp \
     Model/model.cpp \
@@ -46,6 +47,7 @@ HEADERS += \
     Controller/motortempcontrol.h \
     Controller/seatbeltcontrol.h \
     Controller/signallightcontrol.h \
+    Controller/speedholdercontroller.h \
     Controller/tripinfocontrol.h \
     Controller/warningcontrol.h \
     Model/model.h \

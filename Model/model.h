@@ -1,6 +1,7 @@
 #ifndef MODEL_H
 #define MODEL_H
 
+#include <iostream>
 
 enum class doorState : char{
     DOORLOCKED, DOORUNLOCKED
@@ -103,7 +104,7 @@ extern tripState tripFlag ;
 extern int avgSpeed ;
 extern int maxSpeed ;
 extern int fuelCons ;
-extern int distance ;
+extern double distance ;
 
 namespace tripInfoModel {
 auto startEndTrip() -> tripState;
@@ -113,8 +114,37 @@ void updateData() ;
 auto getFuelCons() -> int ;
 auto getAvgSpeed() -> int ;
 auto getMaxSpeed() -> int ;
-auto getDistance() -> int ;
+auto getDistance() -> double ;
 }
 
+extern size_t runTime ;
+extern size_t startTime ;
+
+
+namespace times {
+
+auto getTime() -> size_t ;
+void startTripTime() ;
+auto endTripTime() -> size_t ;
+void updateTime() ;
+
+}
+
+
+extern bool speedHolder ;
+
+namespace speedHold {
+void setSpeedHolder() ;
+void clearSpeedHolder() ;
+auto getSpeedHolder() ->bool ;
+}
+
+
+extern bool newWarning ;
+namespace warningModel {
+auto getWarning() -> bool ;
+void setWarning() ;
+void clearWarning() ;
+}
 
 #endif // MODEL_H

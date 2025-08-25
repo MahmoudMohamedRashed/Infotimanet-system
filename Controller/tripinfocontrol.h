@@ -14,7 +14,7 @@ public:
     static auto getFuelCons() -> int;
     static auto getAvgSpeed() -> int;
     static auto getMaxSpeed() -> int;
-    static auto getDistance() -> int;
+    static auto getDistance() -> double;
 
 };
 
