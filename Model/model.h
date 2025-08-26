@@ -27,6 +27,10 @@ enum class tripState : char{
     STARTTRIP, ENDTRIP
 };
 
+enum class onOffHazard : char {
+  LIGHTON , LIGHTOFF
+};
+
 extern int cabinTemp ;
 
 namespace cabinTempModel {
@@ -92,11 +96,16 @@ auto getBeltState() -> beltState;
 extern signalState leftFlag ;
 extern signalState rightFlag ;
 extern signalState hazardFlag ;
+extern onOffHazard hazardState ;
 
 namespace signalModel{
 auto leftArrowClicked() -> signalState;
 auto rightArrowClicked() -> signalState;
 auto hazardClicked() -> signalState;
+auto getHazardStatus() -> onOffHazard ;
+void toggleHazardStatus() ;
+void setHazardStatus() ;
+auto hazardStatus() -> signalState ;
 }
 
 

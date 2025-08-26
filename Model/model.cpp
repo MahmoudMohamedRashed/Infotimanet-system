@@ -1,5 +1,6 @@
 #include "model.h"
 #include <math.h>
+#include <includeFils.h>
 
 int cabinTemp {} ;
 
@@ -105,6 +106,7 @@ auto beltModel::getBeltState() -> beltState{
 signalState leftFlag {signalState::LEFTOFF};
 signalState rightFlag {signalState::RIGHTOFF};
 signalState hazardFlag{signalState::HAZARDOFF};
+onOffHazard hazardState{onOffHazard::LIGHTON} ;
 
 auto signalModel::leftArrowClicked() -> signalState{
     hazardFlag = signalState::HAZARDOFF ;
@@ -127,6 +129,21 @@ auto signalModel::hazardClicked() -> signalState{
     return hazardFlag;
 }
 
+auto signalModel::getHazardStatus() -> onOffHazard{
+  return hazardState ;
+}
+
+void signalModel::toggleHazardStatus(){
+  hazardState = hazardState == onOffHazard::LIGHTON ? onOffHazard::LIGHTOFF : onOffHazard::LIGHTON ;
+}
+
+void signalModel::setHazardStatus(){
+  hazardState = onOffHazard::LIGHTON ;
+}
+
+auto signalModel::hazardStatus() ->signalState{
+  return hazardFlag ;
+}
 
 tripState tripFlag {tripState::ENDTRIP} ;
 int avgSpeed {} ;
@@ -138,7 +155,7 @@ auto tripInfoModel::startEndTrip() -> tripState{
     if(tripFlag == tripState::STARTTRIP){
         tripFlag = tripState::ENDTRIP ;
         avgSpeed = (distance / times::endTripTime()) * 3.6 ;
-        fuelCons = distance / 5000.0 ;
+        fuelCons = round(distance / fuelConsRelatedTOMeter) ;
     }
     else{
         tripFlag = tripState::STARTTRIP ;

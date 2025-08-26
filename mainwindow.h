@@ -69,6 +69,7 @@ private slots:
     void increaseSpeed() ;
     void decreaseSpeed() ;
     void updateGauge() ;
+    void hazardFlip() ;
 
     Ui::MainWindow *ui;
     int m_curPos{} ;

@@ -14,4 +14,8 @@
 
 #define interTime   1'000
 
+#define decreaseSpeedRatio    1
+#define fuelConsRatio         30
+#define fuelConsRelatedTOMeter      100
+
 #endif // INCLUDEFILS_H

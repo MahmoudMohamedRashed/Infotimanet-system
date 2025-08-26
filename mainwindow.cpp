@@ -238,6 +238,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
       break ;
     case Qt::Key_Down:
       decreaseSpeed() ;
+      speedHolderController::speedHolderOff() ;
       break ;
     case Qt::Key_D :
         if(doorLockControl::isLock() == doorState::DOORLOCKED){
@@ -280,14 +281,17 @@ void MainWindow::timeOut(){
   ++timeCount ;
   timer->start(interTime) ;
   times::updateTime() ;
-  if(timeCount % 30 == 0) {
+  if(timeCount % fuelConsRatio == 0) {
     gaugeControl::setFuelGauge(gaugeControl::getFuelGauge() - 0.5) ;
   }
-  if(timeCount % 10 == 0){
+  if(timeCount % decreaseSpeedRatio == 0){
     if(!speedHolderController::speedIsHold()){
       decreaseSpeed() ;
     }
   }
+
+  auto state = signalLightControl::hazardStatus() ;
+  if( state == signalState::HAZARDON ) hazardFlip() ;
 
   tripInfoControl::updateData() ;
 
@@ -316,7 +320,7 @@ void MainWindow::on_startTripBtn_clicked()
     ui->startTripBtn->setText("End Trip") ;
   }
   else{
-    ui->startTripBtn->setText("End Trip") ;
+    ui->startTripBtn->setText("Start Trip") ;
   }
   ui->lcdNumberfuel->display(tripInfoControl::getFuelCons()) ;
   ui->lcdNumberAvgSpeed->display(tripInfoControl::getAvgSpeed()) ;
@@ -327,4 +331,19 @@ void MainWindow::on_startTripBtn_clicked()
 void MainWindow::weaterTime(){
   updateWeather() ;
   weatherTimer->start(600'000) ;
+}
+
+void MainWindow::hazardFlip(){
+  signalLightControl::toggleHazardStatus() ;
+  auto state = signalLightControl::getHazardStatus() ;
+  if(state == onOffHazard::LIGHTON){
+    ui->hazardBtn->setIcon(QIcon(":/Image/hazard .png")) ;
+    ui->signalLeftBtn->setIcon(QIcon(":/Image/left-arrow (1).png")) ;
+    ui->signalRightBtn->setIcon(QIcon(":/Image/right-arrow (3).png")) ;
+  }
+  else{
+    ui->signalLeftBtn->setIcon(QIcon(QPixmap(":/Image/left-arrow.png"))) ;
+    ui->hazardBtn->setIcon(QIcon(QPixmap(":/Image/hazard (2).png"))) ;
+    ui->signalRightBtn->setIcon(QIcon(QPixmap(":/Image/right-arrow (2).png"))) ;
+  }
 }
