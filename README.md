@@ -14,6 +14,7 @@ The UI simulates common in-vehicle screens and includes three main sections:
    - Set cabin temperature
    - Set fan speed and airflow direction
    - Display current cabin temperature
+   - Current weather temperature
 
 2. **Trip Information**
    - Start / stop trip
@@ -31,7 +32,7 @@ The UI simulates common in-vehicle screens and includes three main sections:
    - Door lock status
    - Seat-belt warning
 
-The UI is static (no full vehicle backend yet) but wired to support data flow via **protobuf** messages and **MQTT** (Mosquitto) for later real-time integration.
+The UI is static (no full vehicle backend yet) but wired to support data flow via **protobuf** messages and **MQTT** (Mosquitto) for later real-time integration. The project code follows an **MVC (Model–View–Controller)** architecture to keep UI, app logic and data models separated and easy to extend.
 
 ---
 
@@ -42,7 +43,8 @@ The UI is static (no full vehicle backend yet) but wired to support data flow vi
 - **Protocol Buffers (protobuf)** — message definitions and codegen  
 - **MQTT (Mosquitto)** — message broker for publish/subscribe (optional runtime)  
 - **clang-tidy** & static analysis for code quality  
-- **cmake**, **make** / **ninja** for building
+- **cmake**, **make** / **ninja** for building  
+- **Architecture:** MVC (Model / View / Controller separation)
 
 ---
 
@@ -51,7 +53,30 @@ The UI is static (no full vehicle backend yet) but wired to support data flow vi
 - Trip controls (Start / Stop button) and readouts (consumption, avg/max speed, distance)  
 - Dashboard widgets (speedometer, RPM, fuel, engine temp) implemented with QML animated gauges (static demo values)  
 - Visual indicators: turn signals, warnings, door lock, seatbelt  
-- Prototype data path prepared using protobuf message definitions and MQTT topics (for future real-time integration)
+- Prototype data path prepared using protobuf message definitions and MQTT topics (for future real-time integration)  
+- Code organized following **MVC** for maintainability and easier integration with backend telemetry
+
+---
+
+## Screenshots
+Screenshots are included in the repository under the `Image/` folder.
+
+### Main UI
+<p align="center">
+  <img src="Image/mainui.png" alt="Main UI" width="800"/>
+</p>
+
+### Trip UI
+<p align="center">
+  <img src="Image/tripui.png" alt="Trip UI" width="800"/>
+</p>
+
+### Cabin / Climate UI
+<p align="center">
+  <img src="Image/cabinui.png" alt="Cabin UI" width="800"/>
+</p>
+
+> If your image files use a different extension (e.g. `.jpg` or different names), update the paths above accordingly. To avoid issues, prefer lowercase filenames without spaces.
 
 ---
 
@@ -65,10 +90,7 @@ The UI is static (no full vehicle backend yet) but wired to support data flow vi
 
 Example Ubuntu install:
 ```bash
-# Qt Creator: use official Qt installer or apt for distro packages
 sudo apt update
 sudo apt install build-essential cmake git protobuf-compiler libprotobuf-dev
-# Mosquitto (MQTT broker)
 sudo apt install mosquitto mosquitto-clients
-# clang-tidy (static analysis)
 sudo apt install clang-tidy
