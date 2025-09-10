@@ -1,4 +1,6 @@
 #include "model.h"
+#include <math.h>
+#include <includeFils.h>
 
 int cabinTemp {} ;
 
@@ -44,7 +46,7 @@ auto fanModel::getFanDirection() -> fanDirState{
 
 int speedGauge{} ;
 float RPMGauge{} ;
-float fuelGauge{} ;
+float fuelGauge{7} ;
 
 void gaugeModel::setSpeedGauge(const int speed){
     speedGauge = speed ;
@@ -90,7 +92,7 @@ auto motorTempModel::getMotorTemp() -> int{
 }
 
 
-beltState beltFlag{beltState::BELTUNLOCKED};
+beltState beltFlag{beltState::BELTLOCKED};
 
 void beltModel::setBeltState(const beltState state){
     beltFlag = state;
@@ -104,6 +106,7 @@ auto beltModel::getBeltState() -> beltState{
 signalState leftFlag {signalState::LEFTOFF};
 signalState rightFlag {signalState::RIGHTOFF};
 signalState hazardFlag{signalState::HAZARDOFF};
+onOffHazard hazardState{onOffHazard::LIGHTON} ;
 
 auto signalModel::leftArrowClicked() -> signalState{
     hazardFlag = signalState::HAZARDOFF ;
@@ -126,20 +129,37 @@ auto signalModel::hazardClicked() -> signalState{
     return hazardFlag;
 }
 
+auto signalModel::getHazardStatus() -> onOffHazard{
+  return hazardState ;
+}
+
+void signalModel::toggleHazardStatus(){
+  hazardState = hazardState == onOffHazard::LIGHTON ? onOffHazard::LIGHTOFF : onOffHazard::LIGHTON ;
+}
+
+void signalModel::setHazardStatus(){
+  hazardState = onOffHazard::LIGHTON ;
+}
+
+auto signalModel::hazardStatus() ->signalState{
+  return hazardFlag ;
+}
 
 tripState tripFlag {tripState::ENDTRIP} ;
 int avgSpeed {} ;
 int maxSpeed {} ;
 int fuelCons {} ;
-int distance {} ;
+double distance {} ;
 
 auto tripInfoModel::startEndTrip() -> tripState{
     if(tripFlag == tripState::STARTTRIP){
         tripFlag = tripState::ENDTRIP ;
-        /***************************************/
+        avgSpeed = (distance / times::endTripTime()) * 3.6 ;
+        fuelCons = round(distance / fuelConsRelatedTOMeter) ;
     }
     else{
         tripFlag = tripState::STARTTRIP ;
+        times::startTripTime() ;
         avgSpeed = 0 ;
         maxSpeed = 0 ;
         distance = 0 ;
@@ -156,7 +176,7 @@ auto tripInfoModel::getMaxSpeed() -> int{
     return maxSpeed ;
 }
 
-auto tripInfoModel::getDistance() -> int{
+auto tripInfoModel::getDistance() -> double{
     return distance ;
 }
 
@@ -166,6 +186,55 @@ auto tripInfoModel::getFuelCons() -> int{
 
 void tripInfoModel::updateData(){
     if(tripFlag == tripState::STARTTRIP){
-        /********************************************/
+    distance += 0.27778 * gaugeModel::getSpeedGauge() ;
+      maxSpeed = std::max(maxSpeed , gaugeModel::getSpeedGauge()) ;
     }
+    else{
+      distance = 0 ;
+    }
+}
+
+size_t runTime {} ;
+size_t startTime {} ;
+auto times::getTime() -> size_t {
+  return runTime ;
+}
+
+void times::startTripTime() {
+  startTime = runTime ;
+}
+
+auto times::endTripTime() -> size_t{
+  size_t ans = runTime - startTime ;
+  startTime = 0 ;
+  return ans ;
+}
+
+void times::updateTime() {
+  ++runTime ;
+}
+
+bool speedHolder {false} ;
+
+void speedHold::setSpeedHolder(){
+  speedHolder = true ;
+}
+void speedHold::clearSpeedHolder(){
+  speedHolder = false ;
+}
+auto speedHold::getSpeedHolder() -> bool {
+  return speedHolder ;
+}
+
+
+bool newWarning {false} ;
+
+auto warningModel::getWarning() -> bool {
+  return newWarning ;
+}
+void warningModel::setWarning() {
+  newWarning = true ;
+}
+void warningModel::clearWarning(){
+  newWarning = false ;
 }

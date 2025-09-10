@@ -18,6 +18,12 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+
+protected:
+
+    void keyPressEvent(QKeyEvent *event) override ;
+
+
 private slots:
     void on_moveRightBtn_clicked();
 
@@ -32,8 +38,6 @@ private slots:
     void on_hazardBtn_clicked();
 
     void on_lightBtn_clicked();
-
-    void on_warningBtn_clicked();
 
     void on_signalRightBtn_clicked();
 
@@ -51,9 +55,27 @@ private slots:
 
     void on_faceFeetBtn_clicked();
 
-private:
+    void timeOut() ;
+
+    void on_startTripBtn_clicked();
+
+    void weaterTime() ;
+
+   private:
+
+
+    void updateWeather() ;
+    void oneKeyPressed() ;
+    void increaseSpeed() ;
+    void decreaseSpeed() ;
+    void updateGauge() ;
+    void hazardFlip() ;
+
     Ui::MainWindow *ui;
     int m_curPos{} ;
+    QTimer *timer {nullptr} ;
+    QTimer *weatherTimer {nullptr} ;
+    size_t timeCount {} ;
 };
 
 

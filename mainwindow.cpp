@@ -11,10 +11,13 @@
 #include "Controller/seatbeltcontrol.h"
 #include "Controller/tripinfocontrol.h"
 #include "Controller/warningcontrol.h"
-
+#include "Controller/speedholdercontroller.h"
+#include "protobuf/tempupdate.h"
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow)
+    : QMainWindow(parent), ui(new Ui::MainWindow) , timer (new QTimer(this)) ,
+      weatherTimer(new QTimer(this))
 {
     ui->setupUi(this);
 
@@ -47,6 +50,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->signalRightBtn->setIcon(QIcon(QPixmap(":/Image/right-arrow (2).png"))) ;
     ui->warningBtn->setIcon(QIcon(":/Image/warning.png")) ;
 
+    ui->speedGauge->rootObject()->setProperty("value", 0) ;
+    ui->rpmGauge->rootObject()->setProperty("value" , 1) ;
+    ui->fuelGuage->rootObject()->setProperty("value" , 7) ;
+    connect(timer , &QTimer::timeout , this , &MainWindow::timeOut) ;
+    timer->start(interTime) ;
+    connect(weatherTimer , &QTimer::timeout , this , &MainWindow::weaterTime) ;
+    weatherTimer->start(600'000) ;
+    updateWeather() ;
 }
 
 MainWindow::~MainWindow()
@@ -132,12 +143,6 @@ void MainWindow::on_lightBtn_clicked()
 }
 
 
-void MainWindow::on_warningBtn_clicked()
-{
-
-}
-
-
 void MainWindow::on_signalRightBtn_clicked()
 {
     signalState state =  signalLightControl::rightArrowClicked() ;
@@ -210,3 +215,135 @@ void MainWindow::on_faceFeetBtn_clicked()
     ui->feetBtn->setIcon(QIcon(":/Image/windscreen-air.png")) ;
 }
 
+
+void MainWindow::updateWeather(){
+  requestTemperatureOnce() ;
+  ui->weather_Lcd->display(temp) ;
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event){
+  switch (event->key()) {
+    case Qt::Key_W:
+      if(warningControl::newWarning()){
+        warningControl::warningOff() ;
+        ui->warningBtn->setIcon(QIcon(":/Image/warning.png")) ;
+      }
+      else{
+        warningControl::warningOn() ;
+        ui->warningBtn->setIcon(QIcon(":/Image/warning (1).png")) ;
+      }
+      break;
+    case Qt::Key_Up:
+      increaseSpeed() ;
+      break ;
+    case Qt::Key_Down:
+      decreaseSpeed() ;
+      speedHolderController::speedHolderOff() ;
+      break ;
+    case Qt::Key_D :
+        if(doorLockControl::isLock() == doorState::DOORLOCKED){
+          doorLockControl::unLock() ;
+          ui->carDoor->setPixmap(QPixmap(":/Image/car-door (1).png"));
+        }
+        else{
+          doorLockControl::lock() ;
+          ui->carDoor->setPixmap(QPixmap(":/Image/car-door.png"));
+        }
+    break ;
+    case Qt::Key_H:
+      if(speedHolderController::speedIsHold()){
+        speedHolderController::speedHolderOff() ;
+      }
+      else{
+        speedHolderController::speedHolderOn() ;
+      }
+      break ;
+    case Qt::Key_B :
+      if(seatBeltControl::isLock() == beltState::BELTLOCKED){
+        seatBeltControl::unLock() ;
+        ui->carSeatBelt->setPixmap(QPixmap(":/Image/seat-belt (1).png")) ;
+      }
+      else{
+        seatBeltControl::lock() ;
+        ui->carSeatBelt->setPixmap(QPixmap(":/Image/seat-belt.png")) ;
+      }
+      break ;
+    default:
+      break;
+  }
+
+  updateGauge() ;
+
+  QMainWindow::keyPressEvent(event) ;
+}
+
+void MainWindow::timeOut(){
+  ++timeCount ;
+  timer->start(interTime) ;
+  times::updateTime() ;
+  if(timeCount % fuelConsRatio == 0) {
+    gaugeControl::setFuelGauge(gaugeControl::getFuelGauge() - 0.5) ;
+  }
+  if(timeCount % decreaseSpeedRatio == 0){
+    if(!speedHolderController::speedIsHold()){
+      decreaseSpeed() ;
+    }
+  }
+
+  auto state = signalLightControl::hazardStatus() ;
+  if( state == signalState::HAZARDON ) hazardFlip() ;
+
+  tripInfoControl::updateData() ;
+
+  updateGauge() ;
+}
+
+void MainWindow::increaseSpeed(){
+  gaugeControl::setSpeedGauge(gaugeControl::getSpeedGauge() + 1) ;
+}
+
+void MainWindow::decreaseSpeed(){
+  gaugeControl::setSpeedGauge(gaugeControl::getSpeedGauge() - 1) ;
+}
+
+void MainWindow::updateGauge(){
+  ui->speedGauge->rootObject()->setProperty("value", gaugeControl::getSpeedGauge()) ;
+  qreal v = static_cast<qreal>(gaugeControl::getRPMGauge());
+  v = std::round(v * 10.0) / 10.0;
+  ui->rpmGauge->rootObject()->setProperty("value" , v) ;
+  ui->fuelGuage->rootObject()->setProperty("value" , gaugeControl::getFuelGauge()) ;
+}
+
+void MainWindow::on_startTripBtn_clicked()
+{
+  if(tripInfoControl::startEndTrip() == tripState::STARTTRIP){
+    ui->startTripBtn->setText("End Trip") ;
+  }
+  else{
+    ui->startTripBtn->setText("Start Trip") ;
+  }
+  ui->lcdNumberfuel->display(tripInfoControl::getFuelCons()) ;
+  ui->lcdNumberAvgSpeed->display(tripInfoControl::getAvgSpeed()) ;
+  ui->lcdNumberMaxSpeed->display(tripInfoControl::getMaxSpeed()) ;
+  ui->lcdNumberDistance->display(tripInfoControl::getDistance()) ;
+}
+
+void MainWindow::weaterTime(){
+  updateWeather() ;
+  weatherTimer->start(600'000) ;
+}
+
+void MainWindow::hazardFlip(){
+  signalLightControl::toggleHazardStatus() ;
+  auto state = signalLightControl::getHazardStatus() ;
+  if(state == onOffHazard::LIGHTON){
+    ui->hazardBtn->setIcon(QIcon(":/Image/hazard .png")) ;
+    ui->signalLeftBtn->setIcon(QIcon(":/Image/left-arrow (1).png")) ;
+    ui->signalRightBtn->setIcon(QIcon(":/Image/right-arrow (3).png")) ;
+  }
+  else{
+    ui->signalLeftBtn->setIcon(QIcon(QPixmap(":/Image/left-arrow.png"))) ;
+    ui->hazardBtn->setIcon(QIcon(QPixmap(":/Image/hazard (2).png"))) ;
+    ui->signalRightBtn->setIcon(QIcon(QPixmap(":/Image/right-arrow (2).png"))) ;
+  }
+}

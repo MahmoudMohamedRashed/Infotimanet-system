@@ -10,6 +10,8 @@ public:
 
     static void updateWarnings(std::string_view warnings) ;
     static auto newWarning() -> bool;
+    static void warningOn() ;
+    static void warningOff() ;
 };
 
 #endif // WARNINGCONTROL_H

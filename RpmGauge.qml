@@ -5,7 +5,7 @@ Item {
     width: 70
     height: 70
 
-    property real value: 3.5
+    property real value: 3
     property int maxValue: 7
 
     Canvas {

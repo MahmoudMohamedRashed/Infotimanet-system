@@ -25,5 +25,6 @@
         <file>Image/blowing (1).png</file>
         <file>Image/windscreen-air.png</file>
         <file>Image/windscreen-air (2).png</file>
+        <file>Image/cloudy.png</file>
     </qresource>
 </RCC>
