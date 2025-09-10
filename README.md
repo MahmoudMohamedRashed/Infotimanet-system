@@ -73,7 +73,7 @@ Screenshots are included in the repository under the `Image/` folder.
 
 ### Cabin / Climate UI
 <p align="center">
-  <img src="Image/cabinui.png" alt="Cabin UI" width="800"/>
+  <img src="Image/canbinui.png" alt="Cabin UI" width="800"/>
 </p>
 
 > If your image files use a different extension (e.g. `.jpg` or different names), update the paths above accordingly. To avoid issues, prefer lowercase filenames without spaces.
